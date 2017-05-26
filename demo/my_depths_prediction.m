@@ -128,6 +128,7 @@ if img_num==0
 end
 
 err = zeros(img_num, 3);
+accu = zeros(img_num, 3);
 for img_idx=1:img_num
     
     one_f_info=file_infos(img_idx);
@@ -208,13 +209,18 @@ for img_idx=1:img_num
     end
     
     
-    err(img_idx, :) = do_save_prediction(depths_inpaint, ground_truth, opts_eval);
+    [accu(img_idx, :), err(img_idx, :)] = do_save_prediction(depths_inpaint, ...
+        ground_truth, opts_eval);
     close all
     
 end
 err_ave = sum(err) / img_num;
+accu_ave = sum(accu) / img_num;
 fprintf('%s%d\n%s%d\n%s%d\n', 'rel:', err_ave(1), 'rms:', err_ave(2), ...
     'log10:', err_ave(3));
+fprintf('%s\n', '------------------------------------');
+fprintf('%s%d\n%s%d\n%s%d\n', 'accu_1.25:', accu_ave(1), 'accu_1.25^2:', ...
+    accu_ave(2), 'accu_1.25^3:', accu_ave(3));
 
 
 end

@@ -1,4 +1,4 @@
-function [ error] = do_error_evaluate( depth_inpaint, ground_truth )
+function error = do_error_evaluate( depth_inpaint, ground_truth )
 
 [H, W] = size(ground_truth);
 if(H~=size(depth_inpaint, 1) || W~=size(depth_inpaint,2))

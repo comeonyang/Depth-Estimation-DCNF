@@ -1,4 +1,4 @@
-function do_save_prediction( depth_inpaint, opts)
+function [accu, err] = do_save_prediction( depth_inpaint, ground_truth, opts)
 
 
 do_show_log_scale=opts.do_show_log_scale;
@@ -62,7 +62,9 @@ one_cache_file='predict_depth.mat';
 data_obj=single(depth_inpaint);
 save( fullfile(one_save_dir,one_cache_file), 'data_obj');
 
+accu = do_accuracy_evaluate(depth_inpaint, ground_truth, 1.25);
 
+err = do_error_evaluate(depth_inpaint, ground_truth);
 
 
 end
